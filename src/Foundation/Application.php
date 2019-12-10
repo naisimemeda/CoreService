@@ -66,7 +66,6 @@ class Application extends Container
 
         $this->markAsRegistered($provider);
 
-
         return $provider;
     }
 

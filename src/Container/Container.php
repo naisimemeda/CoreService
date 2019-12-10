@@ -30,28 +30,27 @@ class Container
     {
         $this->dropStaleInstances($abstract);
 
-    }
-
-    public function singleton($abstract, $concrete = null)
-    {
-        $this->bind($abstract, $concrete, true);
-
         /**
          * 这里意思是如果没有指明抽象类具体的实现 就设置为抽象类型
          */
+
         if (is_null($concrete)) {
             $concrete = $abstract;
         }
 
-        /**
-         * 最核心的一段代码
-         */
         if (!$concrete instanceof Closure) {
             $concrete = $this->getClosure($abstract, $concrete);
         }
 
         $this->bindings[$abstract] = compact('concrete', 'shared');
 
+        $this->dropStaleInstances($abstract);
+
+    }
+
+    public function singleton($abstract, $concrete = null)
+    {
+        $this->bind($abstract, $concrete, true);
     }
 
     /**
