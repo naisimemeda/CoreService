@@ -6,6 +6,9 @@ use App\Routing\RoutingServiceProvider;
 
 class Application extends Container
 {
+
+    protected $hasBeenBootstrapped = false;
+
     /**
      * 记录已经加载过的 类名为键, 值 true
      *
@@ -98,6 +101,19 @@ class Application extends Container
             foreach ($aliases as $alias) {
                 $this->alias($key, $alias);
             }
+        }
+    }
+
+    public function hasBeenBootstrapped()
+    {
+        return $this->hasBeenBootstrapped;
+    }
+
+    public function bootstrapWith(array $bootstrappers)
+    {
+        $this->hasBeenBootstrapped = true;
+        foreach ($bootstrappers as $bootstrapper) {
+            $this->make($bootstrapper)->bootstrap($this);
         }
     }
 }

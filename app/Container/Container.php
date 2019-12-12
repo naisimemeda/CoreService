@@ -2,11 +2,12 @@
 
 namespace App\Container;
 
+use ArrayAccess;
 use Closure;
 use ReflectionClass;
 use ReflectionParameter;
 
-class Container
+class Container implements ArrayAccess
 {
     protected static $instance;
 
@@ -77,15 +78,14 @@ class Container
 
     protected function resolve($abstract, $parameters = [])
     {
+
         $abstract = $this->getAlias($abstract);
 
         //检测之前是否解析过
         if (isset($this->instances[$abstract])) {
             return $this->instances[$abstract];
         }
-
         $concrete = $this->getConcrete($abstract);
-
         //判断是否可以创建对象，来确定调用 build 方法还是重新调用 make 方法
 
 
@@ -98,16 +98,11 @@ class Container
         if ($this->isShared($abstract)) {
             $this->instances[$abstract] = $object;
         }
-
         return $object;
     }
 
     public function build($concrete)
     {
-
-        if ($concrete == 'App\Http\Kernel') {
-            $reflector = new ReflectionClass($concrete);
-        }
         if ($concrete instanceof Closure) {
             return $concrete($this);
         }
@@ -209,5 +204,22 @@ class Container
         }
 
         return $abstract;
+    }
+
+    public function offsetExists($offset)
+    {
+    }
+
+    public function offsetGet($key)
+    {
+       return $this->make($key);
+    }
+
+    public function offsetSet($offset, $value)
+    {
+    }
+
+    public function offsetUnset($offset)
+    {
     }
 }

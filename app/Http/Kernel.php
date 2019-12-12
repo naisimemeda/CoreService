@@ -18,12 +18,20 @@ class Kernel
         \App\Foundation\Bootstrap\RegisterFacades::class,
     ];
 
-    public function bootstrap()
-    {
-    }
-
     public function handle()
     {
-        var_dump($this->app);die;
+        $this->bootstrap();
+    }
+
+    public function bootstrap()
+    {
+        if (! $this->app->hasBeenBootstrapped()) {
+            $this->app->bootstrapWith($this->bootstrappers());
+        }
+    }
+
+    protected function bootstrappers()
+    {
+        return $this->bootstrappers;
     }
 }

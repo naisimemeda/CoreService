@@ -22,7 +22,6 @@ class AliasLoader
         }
 
         $aliases = array_merge(static::$instance->getAliases(), $aliases);
-
         static::$instance->setAliases($aliases);
 
         return static::$instance;

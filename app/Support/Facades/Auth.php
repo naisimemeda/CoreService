@@ -2,10 +2,10 @@
 
 namespace App\Support\Facades;
 
-class Auth
+class Auth extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return 'auth';
+        return 'Auth';
     }
 }
