@@ -4,7 +4,7 @@ namespace App\Support\Facades;
 
 class AuthFacade
 {
-    public function Login()
+    public static function Login()
     {
         var_dump(11111);die;
     }
