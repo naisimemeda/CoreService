@@ -2,10 +2,10 @@
 
 namespace App\Http;
 
-use App\Contracts\Http\Kernel as HttpKernel;
+use App\Container\Http\Kernel as HttpKernel;
 use App\Foundation\Application;
 
-class Kernel
+class Kernel implements HttpKernel
 {
     protected $app;
 
@@ -33,5 +33,10 @@ class Kernel
     protected function bootstrappers()
     {
         return $this->bootstrappers;
+    }
+
+    public function getApplication()
+    {
+        return $this->app;
     }
 }
