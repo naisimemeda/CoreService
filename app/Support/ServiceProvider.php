@@ -1,6 +1,6 @@
 <?php
 
-namespace Nice\Support;
+namespace App\Support;
 
 abstract class ServiceProvider
 {

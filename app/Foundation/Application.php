@@ -1,8 +1,8 @@
 <?php
-namespace Nice\Foundation;
+namespace App\Foundation;
 
-use Nice\Container\Container;
-use Nice\Routing\RoutingServiceProvider;
+use App\Container\Container;
+use App\Routing\RoutingServiceProvider;
 
 class Application extends Container
 {
@@ -22,7 +22,7 @@ class Application extends Container
     public function __construct($basePath = null)
     {
         $this->registerBaseBindings();
-        $this->registerBaseServiceProviders();
+//        $this->registerBaseServiceProviders();
     }
 
     protected function registerBaseBindings()

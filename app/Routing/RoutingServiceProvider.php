@@ -1,7 +1,7 @@
 <?php
-namespace Nice\Routing;
+namespace App\Routing;
 
-use Nice\Support\ServiceProvider;
+use App\Support\ServiceProvider;
 
 class RoutingServiceProvider extends ServiceProvider
 {

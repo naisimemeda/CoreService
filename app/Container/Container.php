@@ -1,6 +1,6 @@
 <?php
 
-namespace Nice\Container;
+namespace App\Container;
 
 use Closure;
 use ReflectionClass;
@@ -64,9 +64,8 @@ class Container
             if ($abstract == $concrete) {
                 return $container->build($concrete);
             }
-
-            return $container->resolve(
-                $concrete, $parameters, $raiseEvents = false
+            return $container->make(
+                $concrete, $parameters
             );
         };
     }
@@ -86,13 +85,15 @@ class Container
         }
 
         $concrete = $this->getConcrete($abstract);
+
         //判断是否可以创建对象，来确定调用 build 方法还是重新调用 make 方法
+
+
         if ($this->isBuildable($concrete, $abstract)) {
             $object = $this->build($concrete);
         } else {
             $object = $this->make($concrete);
         }
-
         //如果是单列
         if ($this->isShared($abstract)) {
             $this->instances[$abstract] = $object;
@@ -103,10 +104,13 @@ class Container
 
     public function build($concrete)
     {
+
+        if ($concrete == 'App\Http\Kernel') {
+            $reflector = new ReflectionClass($concrete);
+        }
         if ($concrete instanceof Closure) {
             return $concrete($this);
         }
-
         try {
             $reflector = new ReflectionClass($concrete);
         } catch (\ReflectionException $e) {
