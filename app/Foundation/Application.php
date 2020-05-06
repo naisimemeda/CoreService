@@ -3,6 +3,7 @@ namespace App\Foundation;
 
 use App\Container\Container;
 use App\Routing\RoutingServiceProvider;
+use App\Support\Facades\AuthFacade;
 
 class Application extends Container
 {
@@ -34,6 +35,11 @@ class Application extends Container
         $this->instance('app', $this);
 
         $this->instance(Container::class, $this);
+
+        $this->singleton('Auth', function ($app) {
+            return new AuthFacade();
+        });
+
     }
 
     /**
@@ -42,7 +48,8 @@ class Application extends Container
     protected function registerBaseServiceProviders()
     {
         $this->register(new RoutingServiceProvider($this));
-//        $this->registerCoreContainerAliases();
+        $this->registerCoreContainerAliases();
+        $this->registerBaseBindings();
     }
 
     public function register($provider)

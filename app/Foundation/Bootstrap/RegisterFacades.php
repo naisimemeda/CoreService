@@ -4,6 +4,7 @@ namespace App\Foundation\Bootstrap;
 
 use App\Foundation\AliasLoader;
 use App\Foundation\Application;
+use App\Support\Facades\Auth;
 use App\Support\Facades\AuthFacade;
 use App\Support\Facades\Facade;
 
@@ -13,7 +14,7 @@ class RegisterFacades
     {
        Facade::setFacadeApplication($app);
        AliasLoader::getInstance([
-            'Auth' => AuthFacade::class,
+            'Auth' => Auth::class,
         ])->register();
     }
 }
